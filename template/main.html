@@ -1,0 +1,27 @@
+<!doctype html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <link rel="stylesheet"
+                  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                  integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                  crossorigin="anonymous">
+            <title>Rat</title>
+        </head>
+        <body>
+            {% if email != 0 and password != 0 %}
+                <div align="right">
+                    <a href="/reg" class="btn btn-primary">зарегестрироваться</a>
+                    <a type="submit" class="btn btn-primary">войти</a>
+                </div>
+            {% else %}
+                <div align="right"><a class="btn btn-primary">зарегестрироваться</a></div>
+            {% endif %}
+            <h1 align="center">RAT</h1>
+            <h3 style="margin-top: 100px;" align="center">Base</h3>
+            <div align="center">
+                <img scr={{url_for('static', filename='data/Chest.jpg')}}" width="100" height="111"/>
+            </div>
+        </body>
+    </html>

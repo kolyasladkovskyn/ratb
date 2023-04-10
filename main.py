@@ -2,22 +2,30 @@ from flask import Flask, request, render_template
 
 app = Flask(__name__, template_folder='template')
 i = 0
+pas = 0
+ema = 0
+
+
+@app.route('/delit')
+def delit():
+    global pas, ema, i
+    pas = 0
+    ema = 0
+    i = 0
+    return main()
 
 
 @app.route('/')
 @app.route('/main')
 def main():
-    global i
-    print(i)
-    if i == 0:
-        return render_template('main.html')
-    else:
-        return render_template('main.html', em=request.form.get('email'), pa=request.form.get('password'))
+    global i, pas, ema
+    print(i, pas, ema)
+    return render_template('main.html', ema=ema, pas=pas)
 
 
 @app.route('/reg', methods=['POST', 'GET'])
 def reg():
-    global i
+    global i, ema, pas
     i = 1
     if request.method == 'GET':
         return f'''         <!doctype html>
@@ -41,14 +49,15 @@ def reg():
                                             aria-describedby="emailHelp" placeholder="Введите адрес почты" name="email">
                                             <input type="password" class="form-control" id="password" 
                                             placeholder="Введите пароль" name="password">
-                                            <button href="/main" type="submit" class="btn btn-primary">Записаться</button>
+                                            <button href="/main" type="submit" class="btn btn-primary">Записаться
+                                            </button>
                                         </form>
                                     </div>
                                   </body>
                                 </html>'''
     elif request.method == 'POST':
-        print(request.form['email'])
-        print(request.form['password'])
+        ema = request.form['email']
+        pas = request.form['password']
         return main()
 
 

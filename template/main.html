@@ -10,7 +10,6 @@
             <title>Rat</title>
         </head>
         <body>
-            {% if ema == None and pas == None %}
                 <div align="right">
                     <a href="/login" class="btn btn-primary">зарегестрироваться</a>
                     <a type="submit" class="btn btn-primary">войти</a>
@@ -20,14 +19,5 @@
                 <div align="center">
                     <img filename='data/Chest.jpg', width="100", height="111"/>
                 </div>
-            {% else %}
-                <div align="right"><a href="/delit" class="btn btn-primary">Выход</a></div>
-                <div align="right"><a href="/delit" class="btn btn-primary">Инвентарь</a></div>
-                <h1 align="center">RAT</h1>
-                <h3 style="margin-top: 100px;" align="center">Base</h3>
-                <div align="center">
-                    <a class="btn" href="/chest"><img filename='data/Chest.jpg', width="100", height="111"/></a>
-                </div>
-            {% endif %}
         </body>
     </html>

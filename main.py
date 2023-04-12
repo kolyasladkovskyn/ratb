@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from flask import Flask, request, render_template
 from wtforms.validators import DataRequired
 
@@ -30,7 +31,7 @@ def chest():
 @app.route('/')
 @app.route('/main')
 def main():
-    return render_template('main.html', ema=em, pas=pas)
+    return render_template('main.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])

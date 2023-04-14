@@ -6,8 +6,7 @@ from data import db_session
 
 app = Flask(__name__, template_folder='template')
 app.config['SECRET_KEY'] = 'art_secret_key'
-db_session.global_init("db/blogs.db")
-app.run()
+
 
 @app.route('/chest')
 def chest():
@@ -78,4 +77,5 @@ class LoginForm(FlaskForm):
 
 
 if __name__ == '__main__':
+    db_session.global_init("db/blogs.db")
     app.run(port=8080, host='127.0.0.1')

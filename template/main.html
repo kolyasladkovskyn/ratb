@@ -10,9 +10,15 @@
             <title>Rat</title>
         </head>
         <body>
-                <div align="right">
-                    <a href="/login" class="btn btn-primary">зарегестрироваться</a>
-                </div>
+                {% if current_user.is_authenticated %}
+                    <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+
+                {% else %}
+                    <p>
+                        <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
+                        <a class="btn btn-success" href="/login">Войти</a>
+                    </p>
+                {% endif %}
                 <h1 align="center">RAT</h1>
                 <h3 style="margin-top: 100px;" align="center">Base</h3>
                 <div align="center">

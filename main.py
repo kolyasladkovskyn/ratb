@@ -1,16 +1,19 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, EmailField
-from flask import Flask, request, render_template, redirect
+from wtforms import PasswordField, BooleanField, SubmitField, EmailField
+from flask import Flask, render_template, redirect, url_for
 from wtforms.validators import DataRequired
 from data import db_session
 from forms.user import RegisterForm
 from data.users import User
+from data.invents import Invent
 from flask_login import LoginManager, login_user, login_required, logout_user
+from random import randint
 
 app = Flask(__name__, template_folder='template')
 app.config['SECRET_KEY'] = 'art_secret_key'
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 
 class LoginForm(FlaskForm):
     email = EmailField('Почта', validators=[DataRequired()])
@@ -18,63 +21,93 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('Войти')
 
+
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect("/")
 
+
 @app.route('/chest')
 def chest():
-    return '''         <!doctype html>
-                                    <html lang="en">
-                                      <head>
-                                        <meta charset="utf-8">
-                                        <meta name="viewport" content="width=device-width, 
-                                        initial-scale=1, shrink-to-fit=no">
-                                        <link rel="stylesheet"
-                                        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-                                        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-                                        crossorigin="anonymous">
-                                        <link rel="stylesheet" type="text/css" />
-                                        <title>reg</title>
-                                      </head>
-                                      <body>
-                                        <h1 align="center">Chest</h1>
-                                      </body>
-                                    </html>'''
+    a = randint(1, 3)
+    if a == 1:
+        return f""""<!doctype html>
+            <html lang="en">
+                <head>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                    <link rel="stylesheet"
+                          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                          crossorigin="anonymous">
+                    <title>Rat</title>
+                </head>
+                <body>   
+                    <div>
+                        <img src="{url_for('static', filename='img/tap.png')}", width="1000", height="555"/>
+                    </div>
+                    <p>
+                        <a class="btn btn-primary ">продать</a>
+                        <a class="btn btn-primary ">получить</a>
+                    </p>
+                </body>
+            </html>"""
+    elif a == 2:
+        return f""""<!doctype html>
+                    <html lang="en">
+                        <head>
+                            <meta charset="utf-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                            <link rel="stylesheet"
+                                  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                                  integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                                  crossorigin="anonymous">
+                            <title>Rat</title>
+                        </head>
+                        <body>   
+                            <div>
+                                <img src="{url_for('static', filename='img/tap.png')}", width="1000", height="555"/>
+                            </div>
+                            <p>
+                                <a class="btn btn-primary ">продать</a>
+                                <a class="btn btn-primary ">получить</a>
+                            </p>
+                        </body>
+                    </html>"""
+    else:
+        return f""""<!doctype html>
+                            <html lang="en">
+                                <head>
+                                    <meta charset="utf-8">
+                                    <meta name="viewport" content="width=device-width, initial-scale=1,
+                                     shrink-to-fit=no">
+                                    <link rel="stylesheet"
+                                          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                                          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                                          crossorigin="anonymous">
+                                    <title>Rat</title>
+                                </head>
+                                <body>   
+                                    <div>
+                                        <img src="{url_for('static', filename='img/tap.png')}", width="1000",
+                                         height="555"/>
+                                    </div>
+                                    <p>
+                                        <a class="btn btn-primary ">продать</a>
+                                        <a class="btn btn-primary ">получить</a>
+                                    </p>
+                                </body>
+                            </html>"""
 
 
 @app.route('/')
 @app.route('/main')
 def main():
-    return render_template('main.html')
-
-@app.route('/success')
-def success():
-    return """"<!doctype html>
-    <html lang="en">
-        <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-            <link rel="stylesheet"
-                  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-                  integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-                  crossorigin="anonymous">
-            <title>Rat</title>
-        </head>
-        <body>
-                <div align="right">
-                    <a href="/login" class="btn btn-primary">профиль</a>
-                    <a type="submit" class="btn btn-primary">выйти</a>
-                </div>
-                <h1 align="center">RAT</h1>
-                <h3 style="margin-top: 100px;" align="center">Base</h3>
-                <div align="center">
-                    <img filename='data/Chest.jpg', width="100", height="111"/>
-                </div>
-        </body>
-    </html>"""
+    db_sess = db_session.create_session()
+    inv = db_sess.query(Invent)
+    return render_template('main.html', inv=inv)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -90,6 +123,7 @@ def login():
                                message="Неправильный логин или пароль",
                                form=form)
     return render_template('login.html', title='Авторизация', form=form)
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def reqister():
@@ -108,16 +142,25 @@ def reqister():
             name=form.name.data,
             email=form.email.data,
         )
+        inv = Invent(money=0, user=user)
         user.set_password(form.password.data)
         db_sess.add(user)
+        db_sess.add(inv)
         db_sess.commit()
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
+
 
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
+
+
+@app.route('/invent')
+def invent():
+    return render_template('invent.html', form='css/style.css')
+
 
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")

@@ -9,7 +9,7 @@ class Invent(SqlAlchemyBase):
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
-    money = sqlalchemy.Column(sqlalchemy.String, nullable=True, default=0)
+    money = sqlalchemy.Column(sqlalchemy.BigInteger, nullable=True, default=0)
     inv = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("users.id"))

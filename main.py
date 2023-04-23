@@ -31,7 +31,7 @@ def logout():
 
 @app.route('/chest')
 def chest():
-    a = randint(1, 3)
+    a = randint(1, 4)
     if a == 1:
         return f""""<!doctype html>
             <html lang="en">
@@ -49,8 +49,8 @@ def chest():
                         <img src="{url_for('static', filename='img/tap.png')}", width="1000", height="555"/>
                     </div>
                     <p>
-                        <a class="btn btn-primary ">продать</a>
-                        <a class="btn btn-primary ">получить</a>
+                        <a href="/sell/50"><button class="btn btn-primary ">продать за 50</button></a>
+                        <a href="/main"><button class="btn btn-primary ">получить</button></a>
                     </p>
                 </body>
             </html>"""
@@ -68,11 +68,11 @@ def chest():
                         </head>
                         <body>   
                             <div>
-                                <img src="{url_for('static', filename='img/tap.png')}", width="1000", height="555"/>
+                                <img src="{url_for('static', filename='img/poop.png')}", width="1000", height="555"/>
                             </div>
                             <p>
-                                <a class="btn btn-primary ">продать</a>
-                                <a class="btn btn-primary ">получить</a>
+                                <a href="/sell/100"><button class="btn btn-primary ">продать за 100</button></a>
+                                <a href="/sell"><button class="btn btn-primary ">получить</button></a>
                             </p>
                         </body>
                     </html>"""
@@ -91,15 +91,115 @@ def chest():
                                 </head>
                                 <body>   
                                     <div>
-                                        <img src="{url_for('static', filename='img/tap.png')}", width="1000",
+                                        <img src="{url_for('static', filename='img/gold poop.jpg')}", width="1000",
                                          height="555"/>
                                     </div>
                                     <p>
-                                        <a class="btn btn-primary ">продать</a>
-                                        <a class="btn btn-primary ">получить</a>
+                                        <a href="/sell/150"><button class="btn btn-primary ">продать за 150</button></a>
+                                        <a href="/giv"><button class="btn btn-primary ">получить</button></a>
                                     </p>
                                 </body>
                             </html>"""
+
+
+@app.route('/gold chest')
+def gold_chest():
+    db_sess = db_session.create_session()
+    inv = db_sess.query(Invent).filter(Invent.user_id == User.id).first()
+    y = int(inv.money)
+    if y < 100:
+        return main()
+    inv.money = y - 100
+    a = randint(1, 4)
+    if a == 1:
+        return f""""<!doctype html>
+            <html lang="en">
+                <head>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                    <link rel="stylesheet"
+                          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                          crossorigin="anonymous">
+                    <title>Rat</title>
+                </head>
+                <body>   
+                    <div>
+                        <img src="{url_for('static', filename='img/dim poop.jpg')}", width="1000", height="555"/>
+                    </div>
+                    <p>
+                        <a href="/sell/300"><button class="btn btn-primary ">продать за 300</button></a>
+                        <a href="/main"><button class="btn btn-primary ", onclick="give()">получить</button></a>
+                    </p>
+                </body>
+            </html>"""
+    elif a == 2:
+        return f""""<!doctype html>
+                    <html lang="en">
+                        <head>
+                            <meta charset="utf-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                            <link rel="stylesheet"
+                                  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                                  integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                                  crossorigin="anonymous">
+                            <title>Rat</title>
+                        </head>
+                        <body>   
+                            <div>
+                                <img src="{url_for('static', filename='img/poop.png')}", width="1000", height="555"/>
+                            </div>
+                            <p>
+                                <a href="/sell/100"><button class="btn btn-primary ", onclick="sell(100)">продать за 100
+                                </button></a>
+                                <a href="/sell"><button class="btn btn-primary ", onclick="give()">получить</button>
+                                </a>
+                            </p>
+                        </body>
+                    </html>"""
+    else:
+        return f""""<!doctype html>
+                            <html lang="en">
+                                <head>
+                                    <meta charset="utf-8">
+                                    <meta name="viewport" content="width=device-width, initial-scale=1,
+                                     shrink-to-fit=no">
+                                    <link rel="stylesheet"
+                                          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                                          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                                          crossorigin="anonymous">
+                                    <title>Rat</title>
+                                </head>
+                                <body>   
+                                    <div>
+                                        <img src="{url_for('static', filename='img/gold poop.jpg')}", width="1000",
+                                         height="555"/>
+                                    </div>
+                                    <p>
+                                        <a href="/sell/150">
+                                            <button class="btn btn-primary ">продать за 150</button>
+                                        </a>
+                                        <a href="/giv"><button class="btn btn-primary ">получить</button></a>
+                                    </p>
+                                </body>
+                            </html>"""
+
+
+@app.route('/giv')
+def giv():
+    return main()
+
+
+@app.route('/sell/<x>')
+@login_required
+def sell(x):
+    print(x)
+    db_sess = db_session.create_session()
+    inv = db_sess.query(Invent).filter(Invent.user_id == User.id).first()
+    y = int(inv.money)
+    inv.money = y + int(x)
+    db_sess.commit()
+    return main()
 
 
 @app.route('/')
